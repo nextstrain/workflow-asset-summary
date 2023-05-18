@@ -1,0 +1,29 @@
+{
+  "name": "workflow-asset-summary",
+  "version": "0.1.0",
+  "description": "",
+  "main": "src/main.js",
+  "type": "module",
+  "engines": {
+    "node": "18"
+  },
+  "scripts": {
+    "start": "node --loader ts-node/esm src/main.ts",
+    "start:inspect": "node --inspect --loader ts-node/esm src/main.ts"
+  },
+  "author": "",
+  "license": "AGPL-3.0-only",
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.332.0",
+    "argparse": "^2.0.1",
+    "ts-node": "^10.9.1",
+    "yaml": "^2.2.2"
+  },
+  "devDependencies": {
+    "@types/argparse": "^2.0.10",
+    "@types/node": "^20.1.7",
+    "@typescript-eslint/eslint-plugin": "^5.59.6",
+    "@typescript-eslint/parser": "^5.59.6",
+    "eslint": "^8.40.0"
+  }
+}

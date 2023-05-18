@@ -1,0 +1,229 @@
+---
+
+phylogenetics:
+  ##
+  ## One-offs (see README.md for how we could list their old versions)
+  ##
+  # ebola (West Africa):
+  #   patterns:
+  #     - s3://nextstrain-data/ebola.json
+  #   description: |-
+  #     Ebola doesn't have timestamped versions, but does have some other dataset-v1 versions
+  #     Excluded here since it's last updated 2019 and the graph needs to allow better zooming for this
+  zika (v2 JSONS only):
+    patterns:
+      - s3://nextstrain-data/zika.json
+    description: |-
+      Zika doesn't have timestamped versions, so we rely on examining the versioned objects in S3.
+  zika (v1 JSONs only):
+    patterns:
+      - s3://nextstrain-data/zika_tree.json
+    description: |-
+      Checking v1 upload times by looking for (versioned objects) named "zika_tree.json"
+  ebola (v1, v2 JSONs):
+    patterns:
+      - s3://nextstrain-data/ebola.json
+      - s3://nextstrain-data/ebola_tree.json
+    description: |-
+      West-african outbreak
+  dengue (all lineages, v1+v2 JSONs):
+    patterns:
+      - s3://nextstrain-data/dengue_all.json
+      - s3://nextstrain-data/dengue_all_tree.json
+    description: |-
+      Dengue doesn't have timestamped versions, but does have old dataset-v1 versions
+  dengue (DENV1, v1 JSONs only):
+    patterns:
+      - s3://nextstrain-data/dengue_denv1_tree.json
+    description: |-
+      Dengue doesn't have timestamped versions, but does have old dataset-v1 versions
+  dengue (DENV2, v2 JSONs only):
+    patterns:
+      - s3://nextstrain-data/dengue_denv2.json
+    description: |-
+      Dengue doesn't have timestamped versions, but does have old dataset-v1 versions
+  measles:
+    patterns:
+      - s3://nextstrain-data/measles.json
+    description: |-
+      Would be interesting to compare our update cadence to the availability of
+      new data
+  RSV A (genome):
+    patterns:
+      - s3://nextstrain-data/rsv_a_genome.json
+    description: |-
+      Now mainly updated by Richard using their group?
+  mumps (na + global):
+    patterns:
+      - s3://nextstrain-data/mumps_na_tree.json
+      - s3://nextstrain-data/mumps_na.json
+      - s3://nextstrain-data/mumps_global_tree.json
+      - s3://nextstrain-data/mumps_global.json
+    description: |-
+      Exploring what it would look like to combine multiple datasets
+      Eventually the viz should have some hierarchy / collapsing / clustering
+      aspect to it.
+  ##
+  ## Influenza builds
+  ##
+  influenza (H5N1/HA):
+    patterns:
+      - s3://nextstrain-data/flu_avian_h5n1_ha.json
+      - s3://nextstrain-data/flu_avian_h5n1_ha_tree.json
+  influenza (H7N9/HA):
+    patterns:
+      - s3://nextstrain-data/flu_avian_h7n9_ha.json
+      - s3://nextstrain-data/flu_avian_h7n9_ha_tree.json
+  influenza (H3N2/HA/2y):
+    patterns:
+      - s3://nextstrain-data/flu_seasonal_h3n2_ha_2y.json
+      - s3://nextstrain-data/flu_seasonal_h3n2_ha_2y_tree.json
+    description: |-
+      There's a ~2year gap here between when the v1 JSONs finished
+      and the v2 JSONs started. Perhaps we uploaded them under a different
+      filename?
+  influenza (H3N2/HA/12y):
+    patterns:
+      - s3://nextstrain-data/flu_seasonal_h3n2_ha_12y.json
+      - s3://nextstrain-data/flu_seasonal_h3n2_ha_12y_tree.json
+  ##
+  ## GISAID BUILDS -- only using all time here for dev purposes -
+  ## note how we've changed the filenames a few times!!!
+  ##
+  ncov (GISAID, global):
+    patterns:
+      - s3://nextstrain-data/ncov_{YYYY-MM-DD}.json
+      - s3://nextstrain-data/ncov_global_{YYYY-MM-DD}.json
+      - s3://nextstrain-data/ncov_gisaid_global_{YYYY-MM-DD}.json
+      - s3://nextstrain-data/ncov_gisaid_global_all-time{YYYY-MM-DD}.json
+      - s3://nextstrain-data/ncov_gisaid_global.json
+    description: |-
+      These results represent many filename patterns reflecting our changes in
+      URL structure as the pandemic evolved
+  ncov (GISAID, asia):
+    patterns:
+      - s3://nextstrain-data/ncov_asia_{YYYY-MM-DD}.json
+      - s3://nextstrain-data/ncov_gisaid_asia_{YYYY-MM-DD}.json
+      - s3://nextstrain-data/ncov_gisaid_asia_all-time_{YYYY-MM-DD}.json
+      - s3://nextstrain-data/ncov_gisaid_asia.json
+    description: |-
+      TKTK
+  ncov (GISAID, europe):
+    patterns:
+      - s3://nextstrain-data/ncov_europe_{YYYY-MM-DD}.json
+      - s3://nextstrain-data/ncov_gisaid_europe_{YYYY-MM-DD}.json
+      - s3://nextstrain-data/ncov_gisaid_europe_all-time_{YYYY-MM-DD}.json
+      - s3://nextstrain-data/ncov_gisaid_europe.json
+    description: |-
+      TKTK
+  ##
+  ## open (genbank) BUILDS -- only using 6m here for dev purposes
+  ##
+  ncov/open/global/6m:
+    patterns:
+      - s3://nextstrain-data/ncov_open_global_6m_{YYYY-MM-DD}.json
+      - s3://nextstrain-data/ncov_open_global_6m.json
+    description: |-
+      TKTK
+  ncov/open/asia/6m:
+    patterns:
+      - s3://nextstrain-data/ncov_open_asia_6m_{YYYY-MM-DD}.json
+      - s3://nextstrain-data/ncov_open_asia_6m.json
+    description: |-
+      TKTK
+  ##
+  ## GISAID 21L BUILDS -- only using 6m here for dev purposes
+  ##
+  ncov/GISAID/21L/global/6m:
+    patterns:
+      - s3://nextstrain-data/ncov_gisaid_21L_global_6m_{YYYY-MM-DD}.json
+      - s3://nextstrain-data/ncov_gisaid_21L_global_6m.json
+    description: |-
+      TKTK
+  ncov/GISAID/21L/asia/6m:
+    patterns:
+      - s3://nextstrain-data/ncov_gisaid_21L_asia_6m_{YYYY-MM-DD}.json
+      - s3://nextstrain-data/ncov_gisaid_21L_asia_6m.json
+    description: |-
+      TKTK
+  ncov/GISAID/21L/africa/6m:
+    patterns:
+      - s3://nextstrain-data/ncov_gisaid_21L_africa_6m_{YYYY-MM-DD}.json
+      - s3://nextstrain-data/ncov_gisaid_21L_africa_6m.json
+    description: |-
+      TKTK
+  ncov/GISAID/21L/europe/6m:
+    patterns:
+      - s3://nextstrain-data/ncov_gisaid_21L_europe_6m_{YYYY-MM-DD}.json
+      - s3://nextstrain-data/ncov_gisaid_21L_europe_6m.json
+    description: |-
+      TKTK
+  ncov/GISAID/21L/oceania/6m:
+    patterns:
+      - s3://nextstrain-data/ncov_gisaid_21L_oceania_6m_{YYYY-MM-DD}.json
+      - s3://nextstrain-data/ncov_gisaid_21L_oceania_6m.json
+    description: |-
+      TKTK
+  ncov/GISAID/21L/north-america/6m:
+    patterns:
+      - s3://nextstrain-data/ncov_gisaid_21L_north-america_6m_{YYYY-MM-DD}.json
+      - s3://nextstrain-data/ncov_gisaid_21L_north-america_6m.json
+    description: |-
+      TKTK
+  ncov/GISAID/21L/south-america/6m:
+    patterns:
+      - s3://nextstrain-data/ncov_gisaid_21L_south-america_6m_{YYYY-MM-DD}.json
+      - s3://nextstrain-data/ncov_gisaid_21L_south-america_6m.json
+    description: |-
+      TKTK
+
+forecasts:
+  ncov MLR (global, clades):
+    patterns:
+      - s3://nextstrain-data/files/workflows/forecasts-ncov/gisaid/nextstrain_clades/global/mlr/{YYYY-MM-DD}_results.json
+    description: |-
+      TKTK
+  ncov MLR (global, pango lineages):
+    patterns:
+      - s3://nextstrain-data/files/workflows/forecasts-ncov/gisaid/pango_lineages/global/mlr/{YYYY-MM-DD}_results.json
+    description: |-
+      TKTK
+  ncov renewal (global, clades):
+    patterns:
+      - s3://nextstrain-data/files/workflows/forecasts-ncov/gisaid/nextstrain_clades/global/renewal/{YYYY-MM-DD}_results.json
+    description: |-
+      TKTK
+  ncov MLR (usa, clades):
+    patterns:
+      - s3://nextstrain-data/files/workflows/forecasts-ncov/gisaid/nextstrain_clades/usa/mlr/{YYYY-MM-DD}_results.json
+    description: |-
+      TKTK
+  ncov renewal (usa, clades):
+    patterns:
+      - s3://nextstrain-data/files/workflows/forecasts-ncov/gisaid/nextstrain_clades/usa/renewal/{YYYY-MM-DD}_results.json
+    description: |-
+      TKTK
+
+## Todo - need a better name than ingest!
+## NOTE: This ('ingest') block is special-cased at the moment to fetch versions
+## of files from S3, as a proof-of-principle. Essentially all of our
+## non-nCoV files (across all categories) would need this approach as our
+## use of YYYY-MM-DD in the filename is the exception not the norm.
+ingest:
+  nCoV open data (NDJSON):
+    patterns:
+      - s3://nextstrain-data/files/ncov/open/genbank.ndjson.zst
+      - s3://nextstrain-data/files/ncov/open/genbank.ndjson.xz
+      - s3://nextstrain-data/files/ncov/open/genbank.ndjson.gz ## delete marker
+    description: |-
+      NOTE - the .gz file is deleted, but the past versions are still available.
+      In S3 terminology, the current version is a delete marker.
+  nCoV open data (global Alignment):
+    patterns:
+      - s3://nextstrain-data/files/ncov/open/global/aligned.fasta.xz
+  nCoV open data (global Metadata):
+    patterns:
+      - s3://nextstrain-data/files/ncov/open/global/metadata.tsv.xz
+  nCoV open data (global Sequences):
+    patterns:
+      - s3://nextstrain-data/files/ncov/open/global/sequences.fasta.xz
