@@ -5,7 +5,7 @@ import { colours } from "./colours.ts";
 
 import * as d3 from "d3";
 
-const styles = {
+const _styles = {
   width: 1200,
   rowHeight: 40,
   top: 50,
@@ -14,7 +14,7 @@ const styles = {
   right: 50
 }
 
-export const useGraph = (d3Container: {current: any}, dataAll: (Data|undefined), category:string) => {
+export const useGraph = (d3Container: {current: any}, dataAll: (Data|undefined), category:string, styles:Record<string,number> = _styles) => {
   useEffect(() => {
     if (!d3Container.current || dataAll?.[category]===undefined) {
       return;

@@ -130,3 +130,26 @@ aws s3api get-object --bucket nextstrain-data --key ncov_asia_2020-04-08.json --
 
 * Using the (large) versioned API response for the nextstrain-data bucket resulted in incorrect parsing of the dates.
 Serialising it to YAML and reading it solved this. Presumably this is related to the timestamps being cast to strings as part of going through YAML.
+
+### Cards UI
+
+An experiment within an experiment.
+You'll need to have run the above steps to generate a local cache.
+Visualisation will be automatically deployed to GitHub pages as above.
+
+```sh
+node --loader ts-node/esm src/intelligent-collapsing.ts
+# produces cache/cards-core.json
+```
+
+```sh
+npm run dev:local
+# open the URL with ?page=cards
+```
+
+Upload cards to S3
+```sh
+jq -c . < cache/cards-core.json > ./cache/cards-core.min.json # minimise
+nextstrain remote upload s3://nextstrain-staging/james/ cache/cards-core.min.json
+rm ./cache/cards-core.min.json
+```

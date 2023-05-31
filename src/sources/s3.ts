@@ -112,7 +112,7 @@ export type Asset = {
 }
 export type Assets = { [pattern: string]: Asset[] };
 
-type S3ContentEntry = {
+export type S3ContentEntry = {
   Key: string;
   LastModified: string; /** YYYY-MM-DDTHH:MM:SS:XX.000Z */ 
   ETag: string; 
@@ -120,7 +120,7 @@ type S3ContentEntry = {
   StorageClass: string
 }
 
-type S3VersionEntry = {
+export type S3VersionEntry = {
   Key: string;
   VersionId: string;
   IsLatest: boolean;
@@ -268,7 +268,7 @@ function cost(apiCount:number) {
 }
 
 
-function readReallyLargeYamlFile(fname:string) {
+export function readReallyLargeYamlFile(fname:string) {
   /**
    * The YAML file listing all versioned assets on nextstrain-data is ~130Mb.
    * Typical parsing approaches don't work. For instance:

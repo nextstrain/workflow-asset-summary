@@ -38,6 +38,10 @@ h2 {
   font-weight: 300;
 }
 
+h4 {
+  margin: 10px 0px;
+}
+
 div.abstract {
   font-size: 0.8rem;
   line-height: 1.1;
