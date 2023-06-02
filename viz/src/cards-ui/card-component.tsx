@@ -219,7 +219,7 @@ function Name({name, isDataset}:{name:string, isDataset:boolean}) {
 }
 
 function Logo(name:string) {
-  if (name.startsWith('blab/')) return <BlabLogo/>
+  if (name.startsWith('groups/blab/')) return <BlabLogo/>
   return <NextstrainLogo/>
 }
 

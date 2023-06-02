@@ -3,9 +3,24 @@ import YAML from 'yaml';
 import { S3ContentEntry, S3VersionEntry, readReallyLargeYamlFile } from "./sources/s3.ts";
 
 
-const IO = {'objects': './cache/nextstrain-data.yaml', versions: './cache/nextstrain-data.versions.yaml', output: './cache/cards-core.json', ignoreKeys: (key:string) => key.includes('/')}
-// const IO = {'objects': './cache/nextstrain-groups.yaml', versions: './cache/nextstrain-groups.versions.yaml', output: './cache/cards-blab.json', ignoreKeys: (key:string) => !key.startsWith('blab/datasets/')}
-// const IO = {'objects': './cache/nextstrain-staging.yaml', versions: './cache/nextstrain-staging.versions.yaml', output: './cache/cards-staging.json', ignoreKeys: (key:string) => key.includes('/')}
+const IO = {
+  objects: './cache/nextstrain-data.yaml', versions: './cache/nextstrain-data.versions.yaml',
+  output: './cache/cards-core.json',
+  ignoreKeys: (key:string) => key.includes('/'),
+  keyToName: (key:string) => key.replace(/\.json$/, '').split("_"),
+}
+// const IO = {
+//   objects: './cache/nextstrain-groups.yaml', versions: './cache/nextstrain-groups.versions.yaml',
+//   output: './cache/cards-blab.json',
+//   ignoreKeys: (key:string) => !key.startsWith('blab/datasets/'),
+//   keyToName: (key:string) => key.replace(/^blab\/datasets/, 'groups/blab').replace(/\.json$/, '').split("_"),
+// }
+// const IO = {
+//   objects: './cache/nextstrain-staging.yaml', versions: './cache/nextstrain-staging.versions.yaml',
+//   output: './cache/cards-staging.json',
+//   ignoreKeys: (key:string) => key.includes('/'),
+//   keyToName: (key:string) => key.replace(/^/, 'staging/').replace(/\.json$/, '').split("_"),
+// }
 
 main();
 
@@ -30,7 +45,7 @@ async function main() {
         return;
       }
 
-      const fields: string[] = r.Key.replace(/\.json$/, '').split("_");
+      const fields: string[] = IO.keyToName(r.Key);
 
       if (fields.filter((k) => k.match(/\d{4}-\d{2}-\d{2}/)).length) return;
 

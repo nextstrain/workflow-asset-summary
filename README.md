@@ -154,13 +154,8 @@ npm run dev:local
 Upload cards to S3 (change filenames as appropriate)
 ```sh
 jq -c . < cache/cards-core.json > ./cache/cards-core.min.json # minimise
-nextstrain remote upload s3://nextstrain-staging/james/ cache/cards-core.min.json
-rm ./cache/cards-core.min.json
-```
-
-
 jq -c . < cache/cards-blab.json > ./cache/cards-blab.min.json # minimise
-nextstrain remote upload s3://nextstrain-staging/james/ cache/cards-blab.min.json
-
 jq -c . < cache/cards-staging.json > ./cache/cards-staging.min.json # minimise
-nextstrain remote upload s3://nextstrain-staging/james/ cache/cards-staging.min.json
+nextstrain remote upload s3://nextstrain-staging/james/ cache/cards-*.min.json
+rm ./cache/cards-*.min.json
+```
