@@ -1,0 +1,15 @@
+---
+# dummy YAMl to populate the cache for the staging bucket (s3://nextstrain-staging)
+# Run this via:
+#   node --loader ts-node/esm src/main.ts --config ./data/staging.yaml --output ./cache/tmp.json --versions
+# Total estimated cost is around 20 cents
+# The output here (./cache/tmp.json) isn't intended to be used currently, but producing this has the side effect
+# of generating the ./cache/nextstrain-staging[.versions].yaml files which we may use
+# in the Cards UI
+phylogenetics:
+  group spanning datasets:
+    patterns:
+      - s3://nextstrain-staging/zika.json
+      - s3://nextstrain-staging/ebola.json
+    description: |-
+      Two datasets which will provide us with a prefix / and thus crawl the entire staging bucket

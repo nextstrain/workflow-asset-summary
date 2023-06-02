@@ -1,6 +1,6 @@
 import { useState, useRef, useMemo } from 'react';
 import { MdCached, MdOutlineShare, MdOutlineVisibility, MdOutlineContentCopy, MdCoronavirus } from "react-icons/md";
-import { NextstrainLogo } from './logo.tsx';
+import { NextstrainLogo, BlabLogo } from './logo.tsx';
 import { SparkLine } from "./sparkLine.tsx";
 import { useGraph } from "../graph.ts";
 
@@ -33,7 +33,7 @@ export const Card = ({data, outer=false}:{data: CardType, outer?:boolean}) => {
         alignItems: 'center',
         color: '#4F4B50',
       }}>
-        {outer && <NextstrainLogo/>}
+        {outer && Logo(data.name)}
         <Name name={data.name} isDataset={data.datasetFilename}/>
         <SparkLine versions={data.versions || []} onClick={()=>{setDetails(details==='versions'?'':'versions')}}/>
       </div>
@@ -216,6 +216,11 @@ function Name({name, isDataset}:{name:string, isDataset:boolean}) {
       {name}
     </a>
   )
+}
+
+function Logo(name:string) {
+  if (name.startsWith('blab/')) return <BlabLogo/>
+  return <NextstrainLogo/>
 }
 
 export type CardType = {

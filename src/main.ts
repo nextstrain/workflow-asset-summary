@@ -14,6 +14,7 @@ function parseArgs() {
   parser.add_argument("--config", {help: "", default: "./data/core.yaml"})
   parser.add_argument("--cache", {help: "cache directory to save s3 api responses. If a matching response file is present we will use it rather than make an API call", default: "./cache"})
   parser.add_argument("--output", {help: "file to write output to", default: "./cache/core.json"})
+  parser.add_argument("--versions", {help: "list object versions on S3 (in addition to current objects)", action: "store_true"})
   parser.add_argument("--upload", {help: "upload file to s3? (not yet implemented)", default: false})
   return parser.parse_args();
 }
@@ -33,9 +34,9 @@ async function main() {
    * Listing the entire bucket would cost ~$2 so try to use a cached file where possible!
    * Using just the 'ingest' collection means we can set a restrictive Prefix and thus
    * the request only costs a fraction of this */
-  {
-    const patterns = collectPatterns(config, new Set(['ingest']));
-    // const patterns = collectPatterns(config); // this line will crawl the entire bucket (~350 API requests) unless you have a cached YAML output
+  if (args.versions) {
+    // this line will make ~350 API requests for nextstrain-data (unless you have a cached YAML output)
+    const patterns = collectPatterns(config); 
     const s3 = new S3Assets(patterns);
     await s3.collectVersionedAssets(args.cache)
     updateAssets(config, s3.assets)

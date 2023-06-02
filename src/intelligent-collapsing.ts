@@ -3,10 +3,15 @@ import YAML from 'yaml';
 import { S3ContentEntry, S3VersionEntry, readReallyLargeYamlFile } from "./sources/s3.ts";
 
 
+const IO = {'objects': './cache/nextstrain-data.yaml', versions: './cache/nextstrain-data.versions.yaml', output: './cache/cards-core.json', ignoreKeys: (key:string) => key.includes('/')}
+// const IO = {'objects': './cache/nextstrain-groups.yaml', versions: './cache/nextstrain-groups.versions.yaml', output: './cache/cards-blab.json', ignoreKeys: (key:string) => !key.startsWith('blab/datasets/')}
+// const IO = {'objects': './cache/nextstrain-staging.yaml', versions: './cache/nextstrain-staging.versions.yaml', output: './cache/cards-staging.json', ignoreKeys: (key:string) => key.includes('/')}
+
 main();
 
 async function main() {
-  const response:S3ApiResponses = YAML.parse(fs.readFileSync('./cache/nextstrain-data.yaml', 'utf8'));
+  console.log("Reading ", IO.objects)
+  const response:S3ApiResponses = YAML.parse(fs.readFileSync(IO.objects, 'utf8'));
 
   let tree:Node[] = [] // todo -- should be called subtrees
 
@@ -20,7 +25,7 @@ async function main() {
         r.Key.startsWith("search_") || r.Key.startsWith("datasets_") || r.Key.startsWith("manifest_") ||
         r.Key.includes("_tree.json") || r.Key.includes("_meta.json") ||
         !r.Key.endsWith(".json") ||
-        r.Key.includes("/") // TODO
+        IO.ignoreKeys(r.Key)
       ) {
         return;
       }
@@ -62,7 +67,7 @@ async function main() {
 
   addDatesOfVersionedAssets(cards);
 
-  fs.writeFileSync('./cache/cards-core.json', JSON.stringify(cards, undefined, 2))
+  fs.writeFileSync(IO.output, JSON.stringify(cards, undefined, 2))
 }
 
 
@@ -208,9 +213,9 @@ function getNode(level: Node[], key:string, parent: (Node|undefined)): Node {
  * A copy-paste simplification of `collectVersionedAssets`
  */
 function addDatesOfVersionedAssets(cards:Card[]) {
-  const fname = './cache/nextstrain-data.versions.yaml'
+  const fname = IO.versions;
   const keyModificationDates:Record<string,string[]> = {}
-  console.log(`Reading S3 (versioned) results from ${fname} (takes ~1min)`)
+  console.log(`Reading S3 (versioned) results from ${fname} (may take ~1mim, depending on file size)`)
   const response = readReallyLargeYamlFile(fname)
   response.forEach((page:any) => {
     (page['Versions'] || []).forEach((r:S3VersionEntry) => {

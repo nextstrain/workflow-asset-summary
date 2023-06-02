@@ -30,9 +30,9 @@ export class S3Assets {
     })
     console.log(`Patterns define objects in ${Object.keys(this.buckets).length} buckets`)
 
-    if (Object.keys(this.buckets).length > 1 || !this.buckets['nextstrain-data']) {
-      throw new Error(`We only currently handle the nextstrain-data bucket; you have specified buckets ${Object.keys(this.buckets).join(', ')}`)
-    }
+    // if (Object.keys(this.buckets).length > 1 || !this.buckets['nextstrain-data']) {
+    //   throw new Error(`We only currently handle the nextstrain-data bucket; you have specified buckets ${Object.keys(this.buckets).join(', ')}`)
+    // }
 
   }
 
