@@ -30,9 +30,9 @@ export class S3Assets {
     })
     console.log(`Patterns define objects in ${Object.keys(this.buckets).length} buckets`)
 
-    if (Object.keys(this.buckets).length > 1 || !this.buckets['nextstrain-data']) {
-      throw new Error(`We only currently handle the nextstrain-data bucket; you have specified buckets ${Object.keys(this.buckets).join(', ')}`)
-    }
+    // if (Object.keys(this.buckets).length > 1 || !this.buckets['nextstrain-data']) {
+    //   throw new Error(`We only currently handle the nextstrain-data bucket; you have specified buckets ${Object.keys(this.buckets).join(', ')}`)
+    // }
 
   }
 
@@ -112,7 +112,7 @@ export type Asset = {
 }
 export type Assets = { [pattern: string]: Asset[] };
 
-type S3ContentEntry = {
+export type S3ContentEntry = {
   Key: string;
   LastModified: string; /** YYYY-MM-DDTHH:MM:SS:XX.000Z */ 
   ETag: string; 
@@ -120,7 +120,7 @@ type S3ContentEntry = {
   StorageClass: string
 }
 
-type S3VersionEntry = {
+export type S3VersionEntry = {
   Key: string;
   VersionId: string;
   IsLatest: boolean;
@@ -268,7 +268,7 @@ function cost(apiCount:number) {
 }
 
 
-function readReallyLargeYamlFile(fname:string) {
+export function readReallyLargeYamlFile(fname:string) {
   /**
    * The YAML file listing all versioned assets on nextstrain-data is ~130Mb.
    * Typical parsing approaches don't work. For instance:

@@ -16,6 +16,7 @@ function App() {
 
   return (
     <div id="app">
+      <a href="?page=cards">Cards UI prototype is here</a>
       <h2>Nextstrain resources over time</h2>
       <div className="abstract">
         Visualisation of nextstrain resources we have uploaded over the years.

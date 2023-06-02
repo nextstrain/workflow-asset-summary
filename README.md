@@ -34,9 +34,10 @@ These resources are grouped into a few collections -- 'phylogenetics', 'forecast
 We make requests to S3 based on these patterns with the goal of listing all matching assets (S3 objects), producing a JSON output in `./cache/core.json` by default.
 
 **Versioned assets**
-While we use YYYY-MM-DD datestams in the filenames for many of our nCoV-related files, we don't do this anywhere else.
+While we use YYYY-MM-DD datestamps in the filenames for many of our nCoV-related files, we don't do this anywhere else.
 Listing all the versions of each file allows us to see the changes over time.
-Currently the code will only examine versioned assets for a small set of files due to being overly cautious about costs involved; see `./stc/main.ts` for how to list versions for everything (takes ~15min and costs around $2).
+The first time this is run it will take ~15min and costs around $2 (for s3://nextstrain-data), but subsequent runs
+will use the cache instead of API calls.
 
 We save the raw result of these API requests as temporary files in `./cache` so that it's easy to develop the code / modify the config without incurring the time (and $$$) penalty of S3 API requests.
 
@@ -44,6 +45,8 @@ We save the raw result of these API requests as temporary files in `./cache` so 
 ```sh
 ## NOTE - AWS environment variables needed -- see below for more
 npm run start
+# if you want to gather versioned assets as well:
+npm run start -- --versions
 ```
 
 ### Visualise
@@ -130,3 +133,34 @@ aws s3api get-object --bucket nextstrain-data --key ncov_asia_2020-04-08.json --
 
 * Using the (large) versioned API response for the nextstrain-data bucket resulted in incorrect parsing of the dates.
 Serialising it to YAML and reading it solved this. Presumably this is related to the timestamps being cast to strings as part of going through YAML.
+
+### Cards UI
+
+An experiment within an experiment.
+You'll need to have run the above steps to generate a local cache.
+Visualisation will be automatically deployed to GitHub pages as above.
+See `src/intelligent-collapsing.ts` for how to use different buckets.
+
+```sh
+node --loader ts-node/esm src/intelligent-collapsing.ts
+# produces cache/cards-core.json
+```
+
+```sh
+npm run dev:local
+# open the URL with ?page=cards
+```
+
+Upload cards to S3 (change filenames as appropriate)
+```sh
+jq -c . < cache/cards-core.json > ./cache/cards-core.min.json # minimise
+nextstrain remote upload s3://nextstrain-staging/james/ cache/cards-core.min.json
+rm ./cache/cards-core.min.json
+```
+
+
+jq -c . < cache/cards-blab.json > ./cache/cards-blab.min.json # minimise
+nextstrain remote upload s3://nextstrain-staging/james/ cache/cards-blab.min.json
+
+jq -c . < cache/cards-staging.json > ./cache/cards-staging.min.json # minimise
+nextstrain remote upload s3://nextstrain-staging/james/ cache/cards-staging.min.json
