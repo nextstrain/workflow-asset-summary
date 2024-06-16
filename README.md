@@ -1,6 +1,10 @@
 # Summary of Nextstrain workflows and assets
 
-> Work in progress!
+
+> This repo explored the update-frequency of core Nextstrain datasets in a retrospective fashion and prototyped a number of visualisation ideas.
+> This work led to the ability to use [snapshot (`@YYYY-MM-DD`)](https://docs.nextstrain.org/en/latest/guides/snapshots.html) identifiers in dataset URLs
+> and the display of versioned resources on pages such as [nextstrain.org/path](https://nextstrain.org/pathogens).
+> This repo is no longer used and has been archived.
 
 See this data visualised at [nextstrain.github.io/workflow-asset-summary](https://nextstrain.github.io/workflow-asset-summary/)
 
